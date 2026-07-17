@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Hidden data in a PDF — see it, then remove it, no upload | GeodePDF</title>
+<meta name="description" content="Author names, earlier drafts, embedded files, scripts, invisible text: a PDF can carry all of it without showing any of it. Inspect the file on your own device, see what it carries, choose what goes, and rebuild it clean. Nothing is uploaded."/>
+<link rel="canonical" href="https://geodeforge.com/geodepdf/what-your-pdf-carries/"/>
+<link rel="icon" href="../assets/brand/favicon.svg" type="image/svg+xml"/>
+<link rel="alternate" hreflang="en" href="https://geodeforge.com/geodepdf/what-your-pdf-carries/"/>
+<link rel="alternate" hreflang="x-default" href="https://geodeforge.com/geodepdf/what-your-pdf-carries/"/>
+<link rel="stylesheet" href="../assets/app.css?v=1"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"GeodePDF — What your PDF carries","url":"https://geodeforge.com/geodepdf/what-your-pdf-carries/","description":"Author names, earlier drafts, embedded files, scripts, invisible text: a PDF can carry all of it without showing any of it. Inspect the file on your own device, see what it carries, choose what goes, and rebuild it clean. Nothing is uploaded.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any — runs entirely in the browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How do I see the hidden data in a PDF?","acceptedAnswer":{"@type":"Answer","text":"Drop the file on this page. It is inspected on your device and every class of hidden data found — metadata, attachments, scripts, hidden layers, form values, invisible text, and more — is listed with what it is and how much of it there is, before anything is touched."}},{"@type":"Question","name":"Can I remove the author name from a PDF?","acceptedAnswer":{"@type":"Answer","text":"Yes — document identity fields like author, title and producing software are one of the classes the inspection surfaces, and clearing them is a checkbox. The rebuilt file is re-inspected afterwards so “removed” is a verified result."}},{"@type":"Question","name":"Can hidden data be removed without uploading the file?","acceptedAnswer":{"@type":"Answer","text":"Yes — that is how this page works. The inspection and the rebuild are JavaScript running in your own browser tab; the file never travels. For a document being cleaned because it is sensitive, that matters more than convenience."}},{"@type":"Question","name":"Is a PDF someone sent me safe to open?","acceptedAnswer":{"@type":"Answer","text":"A PDF can carry scripts set to run on open, launch actions, and embedded files — presence you can check here before trusting the document. The inspection reports what is in the file; it does not run any of it."}},{"@type":"Question","name":"If nothing is found, is the file completely clean?","acceptedAnswer":{"@type":"Answer","text":"It means nothing was found in the classes checked — presence, not absence. A PDF is an open-ended container, so no fixed set of checks can honestly certify that nothing else exists. You get the finding list, stated exactly that carefully."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Your PDF carries more than its pages show","step":[{"@type":"HowToStep","name":"Open the file","text":"Drop your PDF on the page — it is opened locally in your browser and never uploaded."},{"@type":"HowToStep","name":"Choose what to do","text":"The controls come from what your file actually is; options that cannot change the result are not shown."},{"@type":"HowToStep","name":"Run it and read the receipt","text":"The tool reports what it did, what it did not do, and any cost — then you download the result from your own device."}]}</script>
+</head>
+<body data-verb="sanitize" data-rel="../">
+
+
+<div class="gfband" role="img" aria-label="GeodeForge — artisan webtool design">
+  <img class="b-wm" src="../assets/brand/band-wordmark.webp" alt="" width="588" height="96"/>
+  <img class="b-cl" src="../assets/brand/band-geode.webp" alt="" width="320" height="320"/>
+  <img class="b-st" src="../assets/brand/band-strapline.webp" alt="" width="649" height="56"/>
+</div>
+
+<header class="bar">
+
+  <a class="brand" href="../" aria-label="GeodePDF">
+    <span class="gtxt">Geode</span>
+    <svg class="lk" aria-hidden="true" viewBox="0 0 1024 1024" aria-hidden="true">
+      <path d="M 262 112 H 686 V 338 H 912 V 762 A 150 150 0 0 1 762 912 H 262 A 150 150 0 0 1 112 762 V 262 A 150 150 0 0 1 262 112 Z" fill="#45215F"/>
+      <path d="M 712 112 V 296 A 16 16 0 0 0 728 312 H 912 L 712 112 Z" fill="#45215F"/>
+      <path fill-rule="evenodd" fill="#FFFFFF" d="M 149 362 H 271 A 100 99 0 0 1 271 560 H 221 V 662 H 149 Z M 221 424 H 266 A 37 37 0 0 1 266 498 H 221 Z"/>
+      <path fill="#FFFFFF" d="M 675 362 H 875 V 426 H 747 V 478 H 857 V 540 H 747 V 662 H 675 Z"/>
+      <g transform="translate(528.8 512) scale(0.87) translate(-532 -507)"><defs><clipPath id="gclip"><path d="M 448.3 377.4 Q 451.8 364.8 476.3 361.3 Q 500.8 357.8 525.3 363.4 Q 549.8 369.0 568.7 385.1 Q 587.6 401.2 598.1 425.0 Q 608.6 448.8 612.1 476.8 Q 615.6 504.8 612.8 534.2 Q 610.0 563.6 598.1 588.1 Q 586.2 612.6 566.6 630.8 Q 547.0 649.0 522.5 655.3 Q 498.0 661.6 475.6 658.8 Q 453.2 656.0 448.3 632.9 Q 443.4 609.8 440.6 580.4 Q 437.8 551.0 437.1 520.2 Q 436.4 489.4 437.8 458.6 Q 439.2 427.8 442.0 408.9 Q 444.8 390.0 448.3 377.4 Z"/></clipPath></defs><path d="M 409.0 326.0 Q 414.0 308.0 449.0 303.0 Q 484.0 298.0 519.0 306.0 Q 554.0 314.0 581.0 337.0 Q 608.0 360.0 623.0 394.0 Q 638.0 428.0 643.0 468.0 Q 648.0 508.0 644.0 550.0 Q 640.0 592.0 623.0 627.0 Q 606.0 662.0 578.0 688.0 Q 550.0 714.0 515.0 723.0 Q 480.0 732.0 448.0 728.0 Q 416.0 724.0 409.0 691.0 Q 402.0 658.0 398.0 616.0 Q 394.0 574.0 393.0 530.0 Q 392.0 486.0 394.0 442.0 Q 396.0 398.0 400.0 371.0 Q 404.0 344.0 409.0 326.0 Z" fill="#77757C"/><path d="M 421.0 318.0 Q 426.0 300.0 461.0 295.0 Q 496.0 290.0 531.0 298.0 Q 566.0 306.0 593.0 329.0 Q 620.0 352.0 635.0 386.0 Q 650.0 420.0 655.0 460.0 Q 660.0 500.0 656.0 542.0 Q 652.0 584.0 635.0 619.0 Q 618.0 654.0 590.0 680.0 Q 562.0 706.0 527.0 715.0 Q 492.0 724.0 460.0 720.0 Q 428.0 716.0 421.0 683.0 Q 414.0 650.0 410.0 608.0 Q 406.0 566.0 405.0 522.0 Q 404.0 478.0 406.0 434.0 Q 408.0 390.0 412.0 363.0 Q 416.0 336.0 421.0 318.0 Z" fill="#FFFFFF"/><path d="M 433.7 345.7 Q 438.0 330.2 468.1 325.9 Q 498.2 321.6 528.3 328.5 Q 558.4 335.4 581.7 355.2 Q 604.9 375.0 617.8 404.2 Q 630.7 433.4 635.0 467.8 Q 639.3 502.2 635.8 538.4 Q 632.4 574.5 617.8 604.6 Q 603.2 634.7 579.1 657.0 Q 555.0 679.4 524.9 687.1 Q 494.8 694.9 467.3 691.4 Q 439.8 688.0 433.7 659.6 Q 427.7 631.2 424.3 595.1 Q 420.8 559.0 420.0 521.2 Q 419.1 483.3 420.8 445.5 Q 422.6 407.6 426.0 384.4 Q 429.4 361.2 433.7 345.7 Z" fill="#6B6B72"/><path d="M 448.3 377.4 Q 451.8 364.8 476.3 361.3 Q 500.8 357.8 525.3 363.4 Q 549.8 369.0 568.7 385.1 Q 587.6 401.2 598.1 425.0 Q 608.6 448.8 612.1 476.8 Q 615.6 504.8 612.8 534.2 Q 610.0 563.6 598.1 588.1 Q 586.2 612.6 566.6 630.8 Q 547.0 649.0 522.5 655.3 Q 498.0 661.6 475.6 658.8 Q 453.2 656.0 448.3 632.9 Q 443.4 609.8 440.6 580.4 Q 437.8 551.0 437.1 520.2 Q 436.4 489.4 437.8 458.6 Q 439.2 427.8 442.0 408.9 Q 444.8 390.0 448.3 377.4 Z" fill="#B48CDB"/><g clip-path="url(#gclip)"><polygon points="451.8,364.8 500.8,357.8 484.9,438.4" fill="#9A5FCB"/><polygon points="500.8,357.8 491.6,471.9 484.9,438.4" fill="#AD7EDC"/><polygon points="500.8,357.8 549.8,369.0 491.6,471.9" fill="#C4A0E8"/><polygon points="549.8,369.0 529.0,441.5 491.6,471.9" fill="#8A4CBB"/><polygon points="549.8,369.0 587.6,401.2 529.0,441.5" fill="#7B3BA8"/><polygon points="587.6,401.2 521.7,488.4 529.0,441.5" fill="#D3B5F0"/><polygon points="587.6,401.2 608.6,448.8 521.7,488.4" fill="#C4A0E8"/><polygon points="608.6,448.8 567.4,476.0 521.7,488.4" fill="#9A5FCB"/><polygon points="608.6,448.8 615.6,504.8 567.4,476.0" fill="#8A4CBB"/><polygon points="615.6,504.8 541.2,523.2 567.4,476.0" fill="#7B3BA8"/><polygon points="615.6,504.8 610.0,563.6 541.2,523.2" fill="#D3B5F0"/><polygon points="610.0,563.6 556.5,534.2 541.2,523.2" fill="#AD7EDC"/><polygon points="610.0,563.6 586.2,612.6 556.5,534.2" fill="#9A5FCB"/><polygon points="586.2,612.6 516.6,551.9 556.5,534.2" fill="#7B3BA8"/><polygon points="586.2,612.6 547.0,649.0 516.6,551.9" fill="#8A4CBB"/><polygon points="547.0,649.0 528.5,576.5 516.6,551.9" fill="#C4A0E8"/><polygon points="547.0,649.0 498.0,661.6 528.5,576.5" fill="#D3B5F0"/><polygon points="498.0,661.6 493.6,576.0 528.5,576.5" fill="#9A5FCB"/><polygon points="498.0,661.6 453.2,656.0 493.6,576.0" fill="#AD7EDC"/><polygon points="453.2,656.0 490.5,571.1 493.6,576.0" fill="#7B3BA8"/><polygon points="453.2,656.0 443.4,609.8 490.5,571.1" fill="#C4A0E8"/><polygon points="443.4,609.8 478.2,556.7 490.5,571.1" fill="#8A4CBB"/><polygon points="443.4,609.8 437.8,551.0 478.2,556.7" fill="#9A5FCB"/><polygon points="437.8,551.0 477.2,524.9 478.2,556.7" fill="#D3B5F0"/><polygon points="437.8,551.0 436.4,489.4 477.2,524.9" fill="#7B3BA8"/><polygon points="436.4,489.4 467.8,512.8 477.2,524.9" fill="#AD7EDC"/><polygon points="436.4,489.4 439.2,427.8 467.8,512.8" fill="#C4A0E8"/><polygon points="439.2,427.8 485.0,481.7 467.8,512.8" fill="#8A4CBB"/><polygon points="439.2,427.8 444.8,390.0 485.0,481.7" fill="#9A5FCB"/><polygon points="444.8,390.0 469.1,468.9 485.0,481.7" fill="#AD7EDC"/><polygon points="444.8,390.0 451.8,364.8 469.1,468.9" fill="#C4A0E8"/><polygon points="451.8,364.8 484.9,438.4 469.1,468.9" fill="#8A4CBB"/><polygon points="484.9,438.4 491.6,471.9 529.0,441.5 521.7,488.4 567.4,476.0 541.2,523.2 556.5,534.2 516.6,551.9 528.5,576.5 493.6,576.0 490.5,571.1 478.2,556.7 477.2,524.9 467.8,512.8 485.0,481.7 469.1,468.9" fill="#5E2387"/><polygon points="464.0,468.0 520.0,450.0 510.0,514.0" fill="#8A4CBB"/><polygon points="510.0,514.0 546.0,492.0 538.0,566.0" fill="#7B3BA8"/><polygon points="472.0,528.0 510.0,514.0 496.0,578.0" fill="#9A5FCB"/><polygon points="496.0,578.0 510.0,514.0 538.0,566.0" fill="#3F1663"/></g></g>
+    </svg>
+  </a>
+  <nav>
+    <a href="../compress/">Compress</a>
+    <a href="../redact/">Redact</a>
+    <a href="https://github.com/GeodeForge" rel="noopener">Source</a>
+    <a href="mailto:pdf@geodeforge.com">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Your PDF carries more than its pages show</h1>
+    <p class="sub">A PDF is a container. Alongside the pages it can hold the author’s name, the software that made it, earlier saved drafts, whole files riding as attachments, scripts that run on open, and text that paints no ink. Drop a file below to see what yours is carrying — it never leaves this tab.</p>
+
+
+    <p class="costnote">This page loads a PDF reading engine (≈0.5 MB, from this site) when you drop a file — inspecting for hidden text means replaying each page the way a reader does.</p>
+
+    <noscript>
+      <div class="warnbar">This tool does its work with JavaScript, entirely inside your
+      browser — that is the design: no upload, no server, your file never leaves your device.
+      With JavaScript off, the tool can’t run, but every claim on this page still can be
+      checked: the source is public, and the page itself makes no third-party requests of any
+      kind.</div>
+    </noscript>
+
+    <label class="dropzone" id="drop">
+      <input type="file" id="fileinput" style="display:none"/>
+      <span><strong>Drop a PDF here</strong> — it stays on this device.</span>
+      <small>The controls you get come from the file, not from a menu.</small>
+    </label>
+
+    <div class="filecard" id="filecard" hidden>
+      <span class="fname" id="fname"></span>
+      <span class="truth" id="ftruth"></span>
+      <button type="button" id="removefile">Remove</button>
+    </div>
+
+    <div id="warnmount"></div>
+    <div id="oppanel"></div>
+    <div id="receipt" aria-live="polite"></div>
+  </section>
+
+
+  <section class="moretools">
+    <h2 class="mt-h">All the tools</h2>
+  <nav class="verbs" aria-label="All tools">
+    <div class="vgroup">
+      <span class="vpills"><a class="vp big" href="../compress/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/><path d="M9 9l6 6M15 9l-6 6"/></svg>Compress</a>
+      <a class="vp big" href="../redact/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M7 9h10" opacity=".45"/><rect x="7" y="11.2" width="7" height="2.6" fill="currentColor" stroke="none"/><path d="M7 17h6" opacity=".45"/></svg>Redact</a>
+      <a class="vp big" href="../sanitize/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M9.5 12l2 2 3.5-4" opacity=".8"/></svg>Sanitize</a>
+      <a class="vp big" href="../verify/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="5.5"/><path d="M15 15l5 5"/><path d="M8.5 10.5h4M10.5 8.5v4" opacity=".5"/></svg>Verify</a></span>
+    </div>
+    <div class="vgroup">
+      <span class="vglabel">Organize pages</span>
+      <span class="vpills"><a class="vp" href="../merge/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h5v5H5zM5 14h5v5H5z"/><path d="M10 7.5h3.5M10 16.5h3.5M13.5 7.5v9"/><path d="M13.5 12h4"/><path d="M15.5 10l2 2-2 2"/></svg>Merge</a>
+      <a class="vp" href="../split/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9.5" y="4" width="5" height="5"/><path d="M12 9v3M12 12l-5 3M12 12l5 3"/><rect x="4" y="16" width="5" height="4"/><rect x="15" y="16" width="5" height="4"/></svg>Split</a>
+      <a class="vp" href="../extract/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h9l3 3v6"/><path d="M15 4v3h3"/><path d="M12 20v-7M12 20l-3-3M12 20l3-3"/></svg>Extract pages</a>
+      <a class="vp" href="../delete/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h9l3 3v13H6z"/><path d="M15 4v3h3"/><path d="M9.5 11.5l5 5M14.5 11.5l-5 5"/></svg>Delete pages</a>
+      <a class="vp" href="../reorder/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6" height="7"/><rect x="14" y="13" width="6" height="7"/><path d="M14 7.5h3M14 7.5l2-2M14 7.5l2 2M10 16.5H7M10 16.5l-2-2M10 16.5l-2 2"/></svg>Reorder pages</a>
+      <a class="vp" href="../rotate/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="8" height="10"/><path d="M16 5a8 8 0 013 3"/><path d="M19.5 5v3h-3"/></svg>Rotate</a></span>
+    </div>
+    <div class="vgroup">
+      <span class="vglabel">Convert</span>
+      <span class="vpills"><a class="vp" href="../images-to-pdf/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="9" height="9" rx="1"/><circle cx="7" cy="8" r="1"/><path d="M4 13l3-3 3 3 3-4"/><path d="M11 17h7M18 17l-2.5-2.5M18 17l-2.5 2.5"/></svg>Images → PDF</a>
+      <a class="vp" href="../pdf-to-images/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h8l3 3v5"/><path d="M13 4v3h3"/><rect x="11" y="13" width="9" height="7" rx="1"/><circle cx="14" cy="16" r="1"/><path d="M11 20l3-2.5 2 2 3-3"/></svg>PDF → images</a>
+      <a class="vp" href="../text/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6h12M12 6v12M9 18h6"/></svg>Get the text out</a>
+      <a class="vp" href="../ocr/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8V4h4M20 8V4h-4M4 16v4h4M20 16v4h-4"/><path d="M7 12h10" opacity=".6"/><path d="M7 9.5h6M7 14.5h8" opacity=".35"/></svg>Make a scan searchable (OCR)</a></span>
+    </div>
+    <div class="vgroup">
+      <span class="vglabel">Sign &amp; stamp</span>
+      <span class="vpills"><a class="vp" href="../sign/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 18c2-4 4-9 6-9s0 7 2 7 2-3 4-3 1 3 3 3"/><path d="M4 21h16" opacity=".4"/></svg>Sign</a>
+      <a class="vp" href="../watermark/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="16" rx="1"/><path d="M12 8.5c-1.6 2-2.6 3.3-2.6 4.7a2.6 2.6 0 105.2 0c0-1.4-1-2.7-2.6-4.7z" opacity=".6"/></svg>Watermark</a>
+      <a class="vp" href="../page-numbers/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="16" rx="1"/><path d="M8 8h8M8 11h8" opacity=".35"/><path d="M11 15.5h2.5v3M11 18.5h4"/></svg>Page numbers</a></span>
+    </div>
+    <div class="vgroup">
+      <span class="vglabel">Prepare &amp; print</span>
+      <span class="vpills"><a class="vp" href="../booklet/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 6c-2-1.5-4.5-2-8-2v14c3.5 0 6 .5 8 2 2-1.5 4.5-2 8-2V4c-3.5 0-6 .5-8 2z"/><path d="M12 6v14"/></svg>Booklet &amp; N-up</a>
+      <a class="vp" href="../flatten/"><svg class="pi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15l8 4 8-4"/><path d="M4 11l8 4 8-4"/><path d="M4 7l8 4 8-4-8-4z"/></svg>Flatten</a></span>
+    </div>
+    <div class="vgroup">
+      <span class="vglabel">Beyond PDF</span>
+      <span class="vpills"><a class="vp" href="../qr/"><svg class="pi" viewBox="0 0 700 700" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M137 0 H563 A137 137 0 0 1 700 137 V563 A137 137 0 0 1 563 700 H137 A137 137 0 0 1 0 563 V137 A137 137 0 0 1 137 0 Z M180 101 H520 A79 79 0 0 1 599 180 V520 A79 79 0 0 1 520 599 H180 A79 79 0 0 1 101 520 V180 A79 79 0 0 1 180 101 Z"/><rect x="200" y="200" width="300" height="300" rx="14"/></svg>QR codes</a></span>
+    </div>
+  </nav>
+  </section>
+
+
+  <section class="endnotes prose">
+
+<h2>Where it hides</h2>
+<p>Three kinds of cargo ride in PDFs. Editing residue: author and company fields, the name of
+the tool that produced the file, earlier versions appended to the file’s tail, page thumbnails
+from before an edit, leftover objects nothing points at any more. Active content: JavaScript
+wired to run when the file opens, launch actions, whole other files embedded as attachments.
+And page content that paints nothing: text under a fill, off the page edge, white on white, or
+set to an invisible render mode — present in the file, absent from the view.</p>
+<h2>Before you send — and after you receive</h2>
+<p>The sending problem is the familiar one: a document leaves your hands carrying a name, a
+draft history, or a filled form value you never meant to share. The receiving problem gets less
+attention: a file someone sent <em>you</em> can carry scripts and attachments you can’t see on
+any page. Both call for the same first move — look inside before trusting what the pages show.
+For a whole folder of files at once, <a href="../verify/">Verify</a> reads a stack and reports
+each file’s findings, worst first.</p>
+<h2>Look first, then decide what goes</h2>
+<p>Nothing here is removed on a guess. The tool above inspects your file and shows every class
+of hidden data it found, each with a checkbox; you choose, the file is rebuilt without what you
+chose, and the output is re-inspected before it’s handed back. What can’t be removed safely
+says so, with the reason. The honest limit is stated up front, too: the result is “these
+classes, verified gone” — never a certificate that nothing else exists, because a PDF is
+open-ended and a fixed set of checks cannot promise absence.</p>
+<h2>Why no upload matters here in particular</h2>
+<p>A file you are cleaning is, by definition, a file with something in it you don’t want
+shared. The inspection and the rebuild run in your browser, on your own device — there is no
+server on the other end, so there is nowhere for the file, or for what it carries, to have
+gone.</p>
+
+<h2 data-i="faqTitle">Questions people actually ask</h2>
+<dl class="faq">
+  <dt>How do I see the hidden data in a PDF?</dt>
+  <dd>Drop the file on this page. It is inspected on your device and every class of hidden data found — metadata, attachments, scripts, hidden layers, form values, invisible text, and more — is listed with what it is and how much of it there is, before anything is touched.</dd>
+  <dt>Can I remove the author name from a PDF?</dt>
+  <dd>Yes — document identity fields like author, title and producing software are one of the classes the inspection surfaces, and clearing them is a checkbox. The rebuilt file is re-inspected afterwards so “removed” is a verified result.</dd>
+  <dt>Can hidden data be removed without uploading the file?</dt>
+  <dd>Yes — that is how this page works. The inspection and the rebuild are JavaScript running in your own browser tab; the file never travels. For a document being cleaned because it is sensitive, that matters more than convenience.</dd>
+  <dt>Is a PDF someone sent me safe to open?</dt>
+  <dd>A PDF can carry scripts set to run on open, launch actions, and embedded files — presence you can check here before trusting the document. The inspection reports what is in the file; it does not run any of it.</dd>
+  <dt>If nothing is found, is the file completely clean?</dt>
+  <dd>It means nothing was found in the classes checked — presence, not absence. A PDF is an open-ended container, so no fixed set of checks can honestly certify that nothing else exists. You get the finding list, stated exactly that carefully.</dd>
+</dl>
+  </section>
+
+  <section class="verify prose">
+    <h2>We invite you to double-check our work</h2>
+    <p>Open your browser’s developer tools, switch to the Network tab, and run any tool on this
+    page. Nothing happens — no request leaves your device.</p>
+    <p><a href="https://github.com/GeodeForge" rel="noopener">The whole source is on
+    GitHub. Read it.</a></p>
+    <p>Found a bug, or a claim that doesn&rsquo;t hold up? Tell us:
+    <a href="mailto:pdf@geodeforge.com?subject=GeodePDF%20%E2%80%94%20double-check">pdf@geodeforge.com</a>.
+    An example file turns a guess into a quick fix — and if yours is too sensitive to share,
+    we understand; a description still helps.</p>
+    <p class="kicker">That’s the difference between a privacy policy and a fact.</p>
+  </section>
+
+  <section class="sponsor">
+    <h2>This slot pays for the page</h2>
+    <p>One static, labeled sponsor link — an image we host and a plain link. No ad network, no
+    tracking script, no third-party request. That is the entire business model, and it is why
+    nothing above has a price.</p>
+    <a class="btn" href="mailto:pdf@geodeforge.com?subject=Sponsor%20GeodePDF">Sponsor this slot →</a>
+  </section>
+  <section class="share">
+    <h2>Tell someone it exists</h2>
+    <p>This project has no marketing budget and no growth team — it spreads or it does not.</p>
+    <div class="sharerow">
+      <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F&text=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser." target="_blank" rel="noopener">X</a>
+      <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F&title=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser." target="_blank" rel="noopener">Reddit</a>
+      <a href="https://api.whatsapp.com/send?text=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser.%20https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F" target="_blank" rel="noopener">WhatsApp</a>
+      <a href="https://t.me/share/url?url=https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F&text=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser." target="_blank" rel="noopener">Telegram</a>
+      <a href="https://social-plugins.line.me/lineit/share?url=https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F" target="_blank" rel="noopener">LINE</a>
+      <a href="https://www.threads.net/intent/post?text=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser.%20https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F" target="_blank" rel="noopener">Threads</a>
+      <a href="https://bsky.app/intent/compose?text=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser.%20https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F" target="_blank" rel="noopener">Bluesky</a>
+      <a href="https://pinterest.com/pin/create/button/?url=https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F&description=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser." target="_blank" rel="noopener">Pinterest</a>
+      <a href="https://www.tumblr.com/widgets/share/tool?canonicalUrl=https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F&caption=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser." target="_blank" rel="noopener">Tumblr</a>
+      <a href="https://vk.com/share.php?url=https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F&title=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser." target="_blank" rel="noopener">VK</a>
+      <a href="https://news.ycombinator.com/submitlink?u=https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F&t=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser." target="_blank" rel="noopener">Hacker News</a>
+      <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F&title=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser." target="_blank" rel="noopener">微博</a>
+      <a href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F&title=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser." target="_blank" rel="noopener">QQ空间</a>
+      <a href="https://www.douban.com/share/service?href=https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F&name=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser." target="_blank" rel="noopener">豆瓣</a>
+      <a href="mailto:?subject=GeodePDF&body=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser.%20https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F" target="_blank" rel="noopener">Email</a>
+      <button type="button" onclick="navigator.clipboard&&navigator.clipboard.writeText('https://geodeforge.com/geodepdf/');this.textContent='Copied'">Copy link</button>
+    </div>
+  </section>
+
+  <section class="morefrom prose">
+    <h2>More from GeodeForge</h2>
+    <p>GeodeForge finds tools that are hostile to use and/or don&rsquo;t deliver on their
+    promises, works out why, and rebuilds them to be user-friendly. More coming!</p>
+    <p><a href="https://geodeforge.com">Check at geodeforge.com →</a></p>
+  </section>
+</main>
+
+<footer>
+  <span>
+    <a href="https://github.com/GeodeForge" rel="noopener">Source</a> ·
+    <a href="mailto:pdf@geodeforge.com">pdf@geodeforge.com</a>
+  </span>
+  <span>A <a href="https://geodeforge.com">GeodeForge</a> tool</span>
+</footer>
+
+
+<div class="gfband" role="img" aria-label="GeodeForge — artisan webtool design">
+  <img class="b-wm" src="../assets/brand/band-wordmark.webp" alt="" width="588" height="96"/>
+  <img class="b-cl" src="../assets/brand/band-geode.webp" alt="" width="320" height="320"/>
+  <img class="b-st" src="../assets/brand/band-strapline.webp" alt="" width="649" height="56"/>
+</div>
+
+<script type="module" src="../assets/app.js"></script>
+</body>
+</html>
