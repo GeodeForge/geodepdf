@@ -234,7 +234,7 @@ PANEL.sanitize = (pane) => {
   })();
 };
 
-function renderSanitizeOffer(rep) {
+function renderSanitizeOffer(rep, opts = {}) {
   const mount = $('#receipt');
   mount.innerHTML = '';
   const box = receiptBox(`What <b>${escapeHtml(state.file.name)}</b> carries`);
@@ -300,7 +300,7 @@ function renderSanitizeOffer(rep) {
   }
 
   const row = el('div', 'runrow');
-  const go = el('button', 'primary', 'Rebuild without the selected classes');
+  const go = el('button', 'primary', opts.runLabel || 'Rebuild without the selected classes');
   go.onclick = async () => {
     const sel = [...listEl.querySelectorAll('input[type=checkbox]')].filter((x) => x.checked && !x.disabled).map((x) => x.dataset.cls);
     if (rep.signatures?.count && !forceCb?.checked) {
@@ -309,7 +309,7 @@ function renderSanitizeOffer(rep) {
     }
     const r = await runOp('sanitize', state.file.bytes, { classes: sel, ...(forceCb?.checked ? { force: true } : {}) });
     if (!r) return;
-    renderSanitizeReceipt(r);
+    (opts.onDone || renderSanitizeReceipt)(r);
   };
   row.appendChild(go);
   box.appendChild(row);

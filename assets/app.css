@@ -186,6 +186,7 @@ nav a:hover{color:var(--ink)}
 .wall dt{font-weight:600;margin-top:10px}
 .wall dd{margin:2px 0 0 0;color:var(--muted)}
 .kicker{font-style:italic;color:var(--way);margin:6px 0 0}
+.morefrom .sibs{display:flex;flex-direction:column;gap:6px;margin:6px 0 12px;font-size:14px}
 footer{max-width:960px;margin:0 auto;padding:22px 20px 40px;display:flex;
        justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
 footer a{color:var(--muted)}
