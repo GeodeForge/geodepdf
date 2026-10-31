@@ -138,7 +138,7 @@ function addNotes(box, summary) {
   const notes = summary?.notes ?? summary?.report?.notes ?? [];
   for (const n of notes) box.appendChild(el('p', 'warnv', escapeHtml(n)));
 }
-function addDownload(box, bytes, name, label = 'Download PDF', type) {
+function addDownload(box, bytes, name, label = 'Save PDF', type) {
   const b = el('button', 'primary', label);
   b.onclick = () => download(bytes, name, type);
   box.appendChild(b);
@@ -207,8 +207,8 @@ PANEL.compress = (pane) => {
     } else {
       box.appendChild(el('p', 'verd', 'Why there is no quality picker: we ran the tiers against your file and every one of them produces byte-identical output. A picker here would be a choice that does not exist, so it isn’t shown.'));
     }
-    if (s.after < s.before) addDownload(box, r.bytes, outName(state.file.name, 'compressed'), 'Download compressed PDF');
-    else addDownload(box, r.bytes, outName(state.file.name, 'unchanged'), 'Download (original kept)');
+    if (s.after < s.before) addDownload(box, r.bytes, outName(state.file.name, 'compressed'), 'Save compressed PDF');
+    else addDownload(box, r.bytes, outName(state.file.name, 'unchanged'), 'Save (original kept)');
     $('#receipt').appendChild(box);
   };
 
@@ -338,7 +338,7 @@ function renderSanitizeReceipt(r) {
     box.appendChild(el('table', null, '<tr><th>class</th><th>found</th><th>removed</th><th>status</th></tr>' + rows));
   }
   box.appendChild(el('p', 'vfnote', '“Removed” above means verified by re-inspecting the output — not taken from the plan. Presence, not absence: this receipt covers the classes checked, and is not a certificate that nothing else exists.'));
-  addDownload(box, r.bytes, outName(state.file.name, 'sanitized'), 'Download sanitized PDF');
+  addDownload(box, r.bytes, outName(state.file.name, 'sanitized'), 'Save sanitized PDF');
   mount.appendChild(box);
 }
 
@@ -561,7 +561,7 @@ function renderMarkList() {
       mi.appendChild(el('span', null, `p.${page + 1} —`));
       mi.appendChild(el('code', null, m.label
         ? 'removes: ' + escapeHtml(m.label)
-        : 'pixels only — this area will be destroyed, then the page rasterised'));
+        : 'no text here — its pixels are destroyed and the page is rebuilt as an image'));
       if (!rd.committed) {
         const x = el('button', null, 'remove mark');
         x.onclick = () => { list.splice(i, 1); if (!list.length) rd.marks.delete(page); drawRedactPage(); renderMarkList(); drawThumbs(); renderRedactRow(); };
@@ -608,7 +608,7 @@ async function previewMarks() {
   mc.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none';
   pv.appendChild(mc);
   const note = el('p', 'hint',
-    `Preview on p.${plan.page + 1}: planned method is <strong>${plan.method}</strong> (${escapeHtml(plan.why)}). ` +
+    `Preview on p.${plan.page + 1}: the plan is to <strong>${plan.method === 'surgery' ? 'delete the marked text in place' : 'rebuild this page as an image'}</strong> (${escapeHtml(plan.why)}). ` +
     'The dark region is the exact area that will be destroyed — same mask the verifier checks.');
   $('#receipt').innerHTML = ''; $('#receipt').appendChild(note);
 }
@@ -623,20 +623,24 @@ async function commitRedaction() {
   const s = r.summary;
   const box = receiptBox('Redacted — and verified, twice');
   const rows = (s.report ?? []).map((rep) => {
-    const verified = rep.method === 'surgery' ? 'text ✓ · pixels ✓' : 'pixels ✓';
+    const verified = 'text ✓ · pixels ✓';
     const what = rep.method === 'surgery'
       ? escapeHtml(rep.verified ?? rep.why ?? 'glyphs deleted from the page’s instruction list; every other word is still real, selectable text')
       : escapeHtml(rep.why ?? 'no text layer — the marked pixels were destroyed, not covered');
-    return `<tr><td>p.${rep.page + 1}</td><td><strong>${rep.method ?? rep.action}</strong></td><td>${what}</td><td class="verd">${verified}</td></tr>`;
+    const method = rep.method === 'raster' ? 'rebuilt as image' : (rep.method ?? rep.action);
+    return `<tr><td>p.${rep.page + 1}</td><td><strong>${method}</strong></td><td>${what}</td><td class="verd">${verified}</td></tr>`;
   }).join('');
   box.appendChild(el('table', null, '<tr><th>page</th><th>method</th><th>what happened</th><th>verified</th></tr>' + rows));
   if (s.rasterised?.length) {
+    const many = s.rasterised.length > 1;
     box.appendChild(el('p', 'warnv',
-      `Cost, stated plainly: page${s.rasterised.length > 1 ? 's' : ''} ` +
+      `Cost, stated plainly: page${many ? 's' : ''} ` +
       s.rasterised.map((p) => p + 1).join(', ') +
-      ' became an image — no selectable text, search, or working links on that page. Untouched pages keep everything.'));
+      ` became an image, so ${many ? 'they' : 'it'} won’t zoom as crisply as before and the file is larger. ` +
+      `${many ? 'Their' : 'Its'} remaining text is still selectable and searchable, and links, notes and form fields outside your marks still work. ` +
+      'Untouched pages keep everything.'));
   }
-  box.appendChild(el('p', null, 'Per page we attempt surgery, then extract the text back out of our own result and render its pixels. If the marked content survives, or anything is unverifiable, that page is rasterised instead — you are never less safe, only sometimes less convenient.'));
+  box.appendChild(el('p', null, 'Per page we attempt surgery, then extract the text back out of our own result, check that no letter is left under any mark, and render its pixels. If anything fails, that page is rebuilt as an image instead and checked again — you are never less safe, only sometimes less convenient.'));
 
   const proof = el('div', 'proof');
   proof.innerHTML = '<div class="pcol"><h4>Extractor proof — run it yourself</h4><pre id="proofpre">press the button →</pre></div>';
@@ -656,7 +660,7 @@ async function commitRedaction() {
   };
   box.appendChild(btn);
   box.appendChild(document.createTextNode(' '));
-  addDownload(box, r.bytes, outName(state.file.name, 'redacted'), 'Download redacted PDF');
+  addDownload(box, r.bytes, outName(state.file.name, 'redacted'), 'Save redacted PDF');
   $('#receipt').appendChild(box);
 }
 
@@ -695,7 +699,7 @@ PANEL.ocr = (pane) => {
     box.appendChild(el('p', 'hint', 'What OCR actually did: it laid an invisible, selectable text layer over the picture. The page looks identical — the recognized text now exists twice, in the pixels and in the layer. Your pages were not re-encoded.'));
     const rowb = el('div', 'dlrow');
     if (r.bytes && s.kind !== 'nothing-to-ocr') {
-      const b = el('button', 'primary', 'Download searchable PDF');
+      const b = el('button', 'primary', 'Save searchable PDF');
       b.onclick = () => download(r.bytes, outName(state.file.name, 'searchable'));
       rowb.appendChild(b);
     }
@@ -744,7 +748,7 @@ PANEL.merge = (pane) => {
     const box = receiptBox(`merged.pdf — ${state.files.length} files, ${fmt(r.bytes.length)}`);
     addNotes(box, r.summary);
     box.appendChild(el('p', null, 'Pages were copied as they are — nothing was re-compressed on the way through. Anything that could not survive the merge is listed above, not dropped silently.'));
-    addDownload(box, r.bytes, 'merged.pdf', 'Download merged PDF');
+    addDownload(box, r.bytes, 'merged.pdf', 'Save merged PDF');
     $('#receipt').appendChild(box);
   }, 'Order is top-to-bottom. A file that would be damaged by merging is refused with the reason stated.');
 };
@@ -757,7 +761,7 @@ PANEL['images-to-pdf'] = (pane) => {
     const box = receiptBox(`images.pdf — ${state.files.length} page${state.files.length > 1 ? 's' : ''}, ${fmt(r.bytes.length)}`);
     addNotes(box, r.summary);
     box.appendChild(el('p', null, 'Your images went in as they are — the same JPEG or PNG bytes, wrapped in pages. If you want it smaller, run it through Compress, where that trade is made openly.'));
-    addDownload(box, r.bytes, 'images.pdf', 'Download PDF');
+    addDownload(box, r.bytes, 'images.pdf', 'Save PDF');
     $('#receipt').appendChild(box);
   });
 };
@@ -1001,7 +1005,7 @@ PANEL.split = (pane) => simplePanel(pane, {
     addNotes(box, r.summary);
     const row = el('div', 'dlrow');
     for (const f of r.files ?? []) {
-      const b = el('button', 'primary', `Download ${escapeHtml(f.name ?? 'part.pdf')} (${fmt(f.bytes.length)})`);
+      const b = el('button', 'primary', `Save ${escapeHtml(f.name ?? 'part.pdf')} (${fmt(f.bytes.length)})`);
       b.onclick = () => download(f.bytes, f.name ?? 'part.pdf');
       row.appendChild(b);
     }
@@ -1075,7 +1079,7 @@ PANEL['pdf-to-images'] = (pane) => simplePanel(pane, {
     box.appendChild(el('p', 'hint', 'An image is pixels: no selectable text, no links. If you need the text, “Get the text out” reads it directly.'));
     const row = el('div', 'dlrow');
     for (const f of r.files ?? []) {
-      const b = el('button', 'primary', `Download ${escapeHtml(f.name ?? 'page')} (${fmt(f.bytes.length)})`);
+      const b = el('button', 'primary', `Save ${escapeHtml(f.name ?? 'page')} (${fmt(f.bytes.length)})`);
       b.onclick = () => download(f.bytes, f.name ?? 'page.jpg', 'image/jpeg');
       row.appendChild(b);
     }
@@ -1097,7 +1101,7 @@ PANEL.text = (pane) => simplePanel(pane, {
     pre.style.cssText = 'max-height:320px;overflow:auto;background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px;font-size:12.5px;white-space:pre-wrap';
     box.appendChild(pre);
     const row = el('div', 'dlrow');
-    const dl = el('button', 'primary', 'Download .txt');
+    const dl = el('button', 'primary', 'Save .txt');
     dl.onclick = () => download(new TextEncoder().encode(r.text ?? ''), outName(state.file.name, 'text', 'txt'), 'text/plain');
     const cp = el('button', null, 'Copy text');
     cp.onclick = async () => { await navigator.clipboard.writeText(r.text ?? ''); toast('Copied.'); };
@@ -1240,7 +1244,7 @@ function renderSignList() {
     const box = receiptBox('Signed — a picture of your signature, placed');
     addNotes(box, r.summary);
     box.appendChild(el('p', 'warnv', 'Reminder of what this is: ordinary page content, like ink after a photocopier — no certificate, no tamper-detection.'));
-    addDownload(box, r.bytes, outName(state.file.name, 'signed'), 'Download signed PDF');
+    addDownload(box, r.bytes, outName(state.file.name, 'signed'), 'Save signed PDF');
     $('#receipt').appendChild(box);
   };
   const redo = el('button', null, 'Draw a different signature');

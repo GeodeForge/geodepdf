@@ -8,6 +8,7 @@ below. This file travels with every deploy.
 | Component | Where it ships | License |
 |---|---|---|
 | pdf.js (`pdfjs-dist`) — Mozilla | `assets/pdfjs/` (pdf.mjs, pdf.worker.min.mjs, wasm, cmaps, standard fonts) | Apache-2.0 |
+| pdf.js (`pdfjs-dist` 5.7.284, `src/core/jpg.js`) — Mozilla, **modified** | compiled into `assets/geodepdf.worker.js` — the JPEG parser up to the inverse DCT. **Changed by GeodeForge:** it keeps each component's quantised DCT coefficients instead of turning them into pixels; the inverse-DCT and pixel-building steps are removed; each block row keeps every padding block; the component id is kept from the frame header; and each scan's components, spectral band and approximation bits are recorded | Apache-2.0 |
 | tesseract.js | `assets/tesseract/` | Apache-2.0 |
 | tesseract.js-core (Tesseract OCR engine + Leptonica, WASM builds) | `assets/tesseract/core/` | Apache-2.0 |
 | tessdata_fast language models (eng, chi_sim) | `assets/ocr-lang/` | Apache-2.0 |
