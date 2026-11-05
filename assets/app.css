@@ -75,8 +75,6 @@ nav a:hover{color:var(--ink)}
   border:2px dashed var(--line);border-radius:14px;padding:82px 16px;cursor:pointer;
   color:var(--muted);font-size:14px;background:var(--card);position:relative}
 .dropzone:hover{border-color:var(--gem);color:var(--ink)}
-/* The file input stays in the tab order, hidden from sight only, so Tab reaches it and
-   Enter or Space opens the file chooser. The box shows where the keyboard is. */
 .dropzone:focus-within{border-color:var(--gem);color:var(--ink);outline:3px solid var(--gem);outline-offset:3px}
 .vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;
   clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
