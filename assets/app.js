@@ -561,7 +561,7 @@ function renderMarkList() {
       mi.appendChild(el('span', null, `p.${page + 1} —`));
       mi.appendChild(el('code', null, m.label
         ? 'removes: ' + escapeHtml(m.label)
-        : 'no text here — its pixels are destroyed and the page is rebuilt as an image'));
+        : 'no text here — whatever is drawn under it is destroyed, not covered'));
       if (!rd.committed) {
         const x = el('button', null, 'remove mark');
         x.onclick = () => { list.splice(i, 1); if (!list.length) rd.marks.delete(page); drawRedactPage(); renderMarkList(); drawThumbs(); renderRedactRow(); };
@@ -590,6 +590,16 @@ function renderRedactRow() {
   row.appendChild(prev); row.appendChild(go); row.appendChild(clr);
 }
 
+function planWords(plan) {
+  if (plan.method !== 'surgery') return 'rebuild this page as an image';
+  const o = plan.objects ?? {};
+  const parts = [];
+  if (plan.hits || (!o.pictures && !o.drawings)) parts.push('delete the marked text in place');
+  if (o.pictures) parts.push(`overwrite the marked part of ${o.pictures === 1 ? 'the picture' : o.pictures + ' pictures'} under your marks, inside the picture`);
+  if (o.drawings) parts.push(`replace ${o.drawings === 1 ? 'the drawing' : o.drawings + ' drawings'} under your marks with a picture of ${o.drawings === 1 ? 'itself' : 'themselves'}, marked part removed`);
+  return parts.join('; ');
+}
+
 async function previewMarks() {
   const { previewRedactions } = rd.ui;
   const plans = await previewRedactions(state.file.bytes, buildRedactions(), { pdfjs: rd.pdfjs });
@@ -608,8 +618,10 @@ async function previewMarks() {
   mc.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none';
   pv.appendChild(mc);
   const note = el('p', 'hint',
-    `Preview on p.${plan.page + 1}: the plan is to <strong>${plan.method === 'surgery' ? 'delete the marked text in place' : 'rebuild this page as an image'}</strong> (${escapeHtml(plan.why)}). ` +
-    'The dark region is the exact area that will be destroyed — same mask the verifier checks.');
+    `Preview on p.${plan.page + 1}: the plan is to <strong>${escapeHtml(planWords(plan))}</strong> (${escapeHtml(plan.why)}). ` +
+    (plan.objects
+      ? 'The dark region will be destroyed — same mask the verifier checks. Inside pictures and drawings, a 2-point border around it is destroyed too.'
+      : 'The dark region is the exact area that will be destroyed — same mask the verifier checks.'));
   $('#receipt').innerHTML = ''; $('#receipt').appendChild(note);
 }
 
@@ -625,7 +637,7 @@ async function commitRedaction() {
   const rows = (s.report ?? []).map((rep) => {
     const verified = 'text ✓ · pixels ✓';
     const what = rep.method === 'surgery'
-      ? escapeHtml(rep.verified ?? rep.why ?? 'glyphs deleted from the page’s instruction list; every other word is still real, selectable text')
+      ? escapeHtml((rep.objects ? rep.why : rep.verified) ?? rep.why ?? 'glyphs deleted from the page’s instruction list; every other word is still real, selectable text')
       : escapeHtml(rep.why ?? 'no text layer — the marked pixels were destroyed, not covered');
     const method = rep.method === 'raster' ? 'rebuilt as image' : (rep.method ?? rep.action);
     return `<tr><td>p.${rep.page + 1}</td><td><strong>${method}</strong></td><td>${what}</td><td class="verd">${verified}</td></tr>`;
@@ -640,7 +652,25 @@ async function commitRedaction() {
       `${many ? 'Their' : 'Its'} remaining text is still selectable and searchable, and links, notes and form fields outside your marks still work. ` +
       'Untouched pages keep everything.'));
   }
-  box.appendChild(el('p', null, 'Per page we attempt surgery, then extract the text back out of our own result, check that no letter is left under any mark, and render its pixels. If anything fails, that page is rebuilt as an image instead and checked again — you are never less safe, only sometimes less convenient.'));
+  const pageList = (reps) => reps.map((r) => r.page + 1).join(', ');
+  const drawn = (s.report ?? []).filter((r) => r.method === 'surgery' && r.objects?.drawings);
+  if (drawn.length) {
+    const many = drawn.length > 1;
+    box.appendChild(el('p', 'warnv',
+      `Cost, stated plainly: on page${many ? 's' : ''} ${pageList(drawn)}, each drawing under a mark is now a picture of itself, ` +
+      'so that drawing alone won’t zoom as crisply. Everything else on the page is unchanged.'));
+  }
+  const pictured = (s.report ?? []).filter((r) => r.method === 'surgery' && r.objects?.pictures);
+  if (pictured.length) {
+    const many = pictured.length > 1;
+    const methods = pictured.flatMap((r) => r.objects.pictureMethods ?? []);
+    const band = methods.includes('jpeg-wipe') ? ', except the 8-pixel blocks along the edge of a mark in a JPEG picture, which were saved again' : '';
+    const resaved = methods.some((m) => /^lossless-from/.test(m)) ? ' Where a picture could not be changed inside its own JPEG data, it was saved again without loss, so the file is larger.' : '';
+    box.appendChild(el('p', 'warnv',
+      `On page${many ? 's' : ''} ${pageList(pictured)}, the marked pixels were overwritten inside the picture itself. ` +
+      `The rest of the picture is unchanged${band}.${resaved}`));
+  }
+  box.appendChild(el('p', null, 'Per page we attempt surgery, then extract the text back out of our own result, check that no letter and nothing drawn is left under any mark, check that the rest of the page looks as it did, and render its pixels. If anything fails, that page is rebuilt as an image instead and checked again — you are never less safe, only sometimes less convenient.'));
 
   const proof = el('div', 'proof');
   proof.innerHTML = '<div class="pcol"><h4>Extractor proof — run it yourself</h4><pre id="proofpre">press the button →</pre></div>';

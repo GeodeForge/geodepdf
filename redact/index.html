@@ -11,7 +11,7 @@
 <link rel="alternate" hreflang="x-default" href="https://geodeforge.com/geodepdf/redact/"/>
 <link rel="stylesheet" href="../assets/app.css?v=1"/>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"GeodePDF — Redact","url":"https://geodeforge.com/geodepdf/redact/","description":"A black rectangle drawn over text hides nothing — the text is still in the file. GeodePDF deletes marked text from the PDF itself, verifies its own output, and shows you the proof. All on your device; nothing is uploaded.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any — runs entirely in the browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why does a redacted PDF sometimes still show the text?","acceptedAnswer":{"@type":"Answer","text":"Because covering is not removing. A rectangle drawn over text is just one more drawing instruction; the characters are still in the file underneath it and can be selected, copied, or extracted. Redaction has to delete the text from the file itself, which is what this tool does — and then proves by extracting its own output."}},{"@type":"Question","name":"Can text be recovered from a PDF redacted here?","acceptedAnswer":{"@type":"Answer","text":"Run the check yourself — the page offers to extract the text of your redacted file right after committing. Marked content comes back as zero characters. That check is also run automatically before the file is handed to you, and if it cannot pass, you get an error instead of the file."}},{"@type":"Question","name":"What happens on a scanned page?","acceptedAnswer":{"@type":"Answer","text":"A scan has no text to delete, so the marked pixels are destroyed and the page is rebuilt as an image. Cost, stated up front: that page won’t zoom as crisply, and the file grows. Any recognized text on it stays searchable, except what you marked. Pages you didn’t mark keep everything."}},{"@type":"Question","name":"Does the rest of my document stay selectable text?","acceptedAnswer":{"@type":"Answer","text":"Yes — only the marked glyphs are deleted; everything else remains real text, including on a page rebuilt as an image. Try selecting around the mark in the output."}},{"@type":"Question","name":"Does redaction look inside files attached to the PDF?","acceptedAnswer":{"@type":"Answer","text":"No. Attached files are carried over exactly as they were, so check them yourself before you send the document."}},{"@type":"Question","name":"Is my document uploaded for redaction?","acceptedAnswer":{"@type":"Answer","text":"No. Marking, removal, and both verifications run in your browser. The file never leaves your device — which for a document worth redacting is rather the point."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why does a redacted PDF sometimes still show the text?","acceptedAnswer":{"@type":"Answer","text":"Because covering is not removing. A rectangle drawn over text is just one more drawing instruction; the characters are still in the file underneath it and can be selected, copied, or extracted. Redaction has to delete the text from the file itself, which is what this tool does — and then proves by extracting its own output."}},{"@type":"Question","name":"Can text be recovered from a PDF redacted here?","acceptedAnswer":{"@type":"Answer","text":"Run the check yourself — the page offers to extract the text of your redacted file right after committing. Marked content comes back as zero characters. That check is also run automatically before the file is handed to you, and if it cannot pass, you get an error instead of the file."}},{"@type":"Question","name":"What happens on a scanned page?","acceptedAnswer":{"@type":"Answer","text":"A scan has no text to delete, so the marked pixels are overwritten inside the scan itself, and the rest of the scan is kept as stored, apart from a thin band around each mark in a JPEG scan. If a scan is stored in a way the tool cannot change and check in place, the page is rebuilt as an image instead: it won’t zoom as crisply, and the file grows. Any recognized text on it stays searchable, except what you marked. Pages you didn’t mark keep everything."}},{"@type":"Question","name":"Does the rest of my document stay selectable text?","acceptedAnswer":{"@type":"Answer","text":"Yes — only the marked glyphs are deleted; everything else remains real text, including on a page rebuilt as an image. Try selecting around the mark in the output."}},{"@type":"Question","name":"Does redaction look inside files attached to the PDF?","acceptedAnswer":{"@type":"Answer","text":"No. Attached files are carried over exactly as they were, so check them yourself before you send the document."}},{"@type":"Question","name":"Is my document uploaded for redaction?","acceptedAnswer":{"@type":"Answer","text":"No. Marking, removal, and both verifications run in your browser. The file never leaves your device — which for a document worth redacting is rather the point."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Redact a PDF — remove the text, don’t cover it","step":[{"@type":"HowToStep","name":"Open the file","text":"Drop your PDF on the page — it is opened locally in your browser and never uploaded."},{"@type":"HowToStep","name":"Choose what to do","text":"The controls come from what your file actually is; options that cannot change the result are not shown."},{"@type":"HowToStep","name":"Run it and read the receipt","text":"The tool reports what it did, what it did not do, and any cost — then you save the result on your own device."}]}</script>
 </head>
 <body data-verb="redact" data-rel="../">
@@ -134,16 +134,21 @@ byte-identical.</p>
 <p>On pages with real text, marked words are removed by <strong>content-stream surgery</strong>:
 the drawing instructions for those exact glyphs are deleted from the page's instruction list.
 The secret is not obscured — it is gone, and every other word on the page remains real,
-selectable text. On scanned pages there are no glyphs to delete, so the tool destroys the
-marked <em>pixels</em> and rebuilds the page as an image; the same happens when a photo or a
-drawn shape lies under a mark, because deleting text cannot destroy pixels. That path has a
-stated cost: the page won’t zoom as crisply, and the file grows. Its remaining text stays
-selectable and searchable, and its links and notes keep working. Untouched pages keep
-everything, and the receipt tells you exactly which pages took which path.</p>
+selectable text. Deleting text cannot destroy pixels, so a picture under a mark, a scan or a
+photo, has its marked <em>pixels</em> overwritten inside the picture itself; the rest of the
+picture is kept as stored. A drawing under a mark, a line, a box or a chart, is replaced by a
+picture of itself with the marked part removed; everything else on the page stays as it was.
+Where the tool cannot do that and check it (a drawing nested inside another drawing, for
+example), it rebuilds the page as an image instead. That path has a stated cost: the page won’t
+zoom as crisply, and the file grows. Its remaining text stays selectable and searchable, and its
+links and notes keep working. Untouched pages keep everything, and the receipt tells you exactly
+which pages took which path.</p>
 <h2>Verified twice — and one thing only you can verify</h2>
 <p>After redacting, the tool extracts the text back out of its own output and checks the marked
-content is not in it; then it renders the output and checks the marked region is opaque. If
-either check cannot pass, the result is thrown away and you are told — you never get a file
+content is not in it; then it renders the output and checks the marked region is opaque. On a
+page where pictures or drawings were cut, it also reads each of them back to check nothing is left
+under a mark, and checks the rest of the page looks as it did. If
+any check cannot pass, the result is thrown away and you are told — you never get a file
 that claims to be redacted and is not. One check remains yours: the tool can prove the mark is
 opaque, but only you can confirm it covered <em>the right thing</em>. That is why your marks
 snap to the words they cover, why the mark list names what each mark removes, and why the
@@ -151,8 +156,8 @@ preview shows the exact region that will be destroyed before you commit.</p>
 <h2>Scans that were OCR'd</h2>
 <p>A scan that went through text recognition carries the recognized text as an invisible layer
 over the picture — the secret exists twice. Deleting only the text layer would leave it plainly
-readable in the image, so such pages always take the pixel-destroying path. This is enforced in
-the engine; there is no way to switch it off, on purpose.</p>
+readable in the image, so on such pages the marked pixels are always destroyed as well. This is
+enforced in the engine; there is no way to switch it off, on purpose.</p>
 
 <h2 data-i="faqTitle">Questions people actually ask</h2>
 <dl class="faq">
@@ -161,7 +166,7 @@ the engine; there is no way to switch it off, on purpose.</p>
   <dt>Can text be recovered from a PDF redacted here?</dt>
   <dd>Run the check yourself — the page offers to extract the text of your redacted file right after committing. Marked content comes back as zero characters. That check is also run automatically before the file is handed to you, and if it cannot pass, you get an error instead of the file.</dd>
   <dt>What happens on a scanned page?</dt>
-  <dd>A scan has no text to delete, so the marked pixels are destroyed and the page is rebuilt as an image. Cost, stated up front: that page won’t zoom as crisply, and the file grows. Any recognized text on it stays searchable, except what you marked. Pages you didn’t mark keep everything.</dd>
+  <dd>A scan has no text to delete, so the marked pixels are overwritten inside the scan itself, and the rest of the scan is kept as stored, apart from a thin band around each mark in a JPEG scan. If a scan is stored in a way the tool cannot change and check in place, the page is rebuilt as an image instead: it won’t zoom as crisply, and the file grows. Any recognized text on it stays searchable, except what you marked. Pages you didn’t mark keep everything.</dd>
   <dt>Does the rest of my document stay selectable text?</dt>
   <dd>Yes — only the marked glyphs are deleted; everything else remains real text, including on a page rebuilt as an image. Try selecting around the mark in the output.</dd>
   <dt>Does redaction look inside files attached to the PDF?</dt>
