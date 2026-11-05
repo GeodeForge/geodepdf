@@ -12,6 +12,7 @@ const ASSETS = new URL(`${REL}assets/`, location.href).href;
 const WORKER_CONFIG = {
   pdfjsUrl: ASSETS + 'pdfjs/pdf.mjs',
   workerSrc: ASSETS + 'pdfjs/pdf.worker.min.mjs',
+  imageDecodersUrl: ASSETS + 'pdfjs/pdf.image_decoders.min.mjs',
   getDocumentParams: {
     wasmUrl: ASSETS + 'pdfjs/wasm/',
     cMapUrl: ASSETS + 'pdfjs/cmaps/',
@@ -602,7 +603,7 @@ function planWords(plan) {
 
 async function previewMarks() {
   const { previewRedactions } = rd.ui;
-  const plans = await previewRedactions(state.file.bytes, buildRedactions(), { pdfjs: rd.pdfjs });
+  const plans = await previewRedactions(state.file.bytes, buildRedactions(), { pdfjs: rd.pdfjs, docParams: { wasmUrl: WORKER_CONFIG.getDocumentParams.wasmUrl } });
   const plan = plans.find((p) => p.page === rd.page) ?? plans[0];
   if (plan && plan.page !== rd.page) { rd.page = plan.page; await drawRedactPage(); }
   if (!plan) return;

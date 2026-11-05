@@ -138,8 +138,8 @@ selectable text. Deleting text cannot destroy pixels, so a picture under a mark,
 photo, has its marked <em>pixels</em> overwritten inside the picture itself; the rest of the
 picture is kept as stored. A drawing under a mark, a line, a box or a chart, is replaced by a
 picture of itself with the marked part removed; everything else on the page stays as it was.
-Where the tool cannot do that and check it (a drawing nested inside another drawing, for
-example), it rebuilds the page as an image instead. That path has a stated cost: the page won’t
+Where the tool cannot do that and check it (a drawing nested inside another drawing, or a
+picture the tool cannot read, for example), it rebuilds the page as an image instead. That path has a stated cost: the page won’t
 zoom as crisply, and the file grows. Its remaining text stays selectable and searchable, and its
 links and notes keep working. Untouched pages keep everything, and the receipt tells you exactly
 which pages took which path.</p>
