@@ -11,7 +11,7 @@
 <link rel="alternate" hreflang="x-default" href="https://geodeforge.com/geodepdf/"/>
 <link rel="stylesheet" href="assets/app.css?v=1"/>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"GeodePDF","url":"https://geodeforge.com/geodepdf/","description":"Compress, redact, merge, split, sign and OCR PDF files entirely on your own device. Nothing is uploaded — there is no server. Free, no account, no file-size limits.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any — runs entirely in the browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is my PDF uploaded when I use these tools?","acceptedAnswer":{"@type":"Answer","text":"No. The file is opened by JavaScript running in your own browser tab and never leaves your device. You can verify this: open your browser’s developer tools, watch the Network tab, and run any tool — no request carries your file anywhere."}},{"@type":"Question","name":"Why is there no file-size limit or daily quota?","acceptedAnswer":{"@type":"Answer","text":"Limits exist to manage server cost, and there is no server. The practical limit is your device’s own memory, which for ordinary documents you will not notice."}},{"@type":"Question","name":"Do the tools work offline?","acceptedAnswer":{"@type":"Answer","text":"Once a tool page has loaded, the work itself needs no connection — the processing is local. The page and its engine still have to load from this site first."}},{"@type":"Question","name":"What does GeodePDF do with my data?","acceptedAnswer":{"@type":"Answer","text":"Nothing, because it never receives any. The page makes no third-party requests of any kind — no analytics, no ad network, no fonts from a CDN. The one sponsor link is a plain link."}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is my PDF uploaded when I use these tools?","acceptedAnswer":{"@type":"Answer","text":"No. The file is opened by JavaScript running in your own browser tab and never leaves your device. You can verify this: open your browser’s developer tools, watch the Network tab, and run any tool — no request carries your file anywhere."}},{"@type":"Question","name":"Why is there no file-size limit or daily quota?","acceptedAnswer":{"@type":"Answer","text":"Limits exist to manage server cost, and there is no server. The practical limit is your device’s own memory, which for ordinary documents you will not notice."}},{"@type":"Question","name":"Do the tools work offline?","acceptedAnswer":{"@type":"Answer","text":"Not fully. A tool’s engine loads from this site the first time you run that tool, so you need a connection then. Your file never goes with it: the processing is local."}},{"@type":"Question","name":"What does GeodePDF do with my data?","acceptedAnswer":{"@type":"Answer","text":"Nothing, because it never receives any. The page makes no third-party requests of any kind — no analytics, no ad network, no fonts from a CDN. The one sponsor link is a plain link."}}]}</script>
 </head>
 <body data-verb="" data-rel="">
 
@@ -24,29 +24,7 @@
     <img src="assets/brand/poster-1600.jpg" alt="" width="1600" height="1600"/>
   </picture>
 </div>
-<script>
-(function () {
-  var s = document.getElementById('tsplash');
-  if (!s) return;
-  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { s.remove(); return; }
-  s.classList.add('on');
-  var img = s.querySelector('img'), dead = false;
-  function kill(fast) {
-    if (dead || !s) return; dead = true;
-    if (fast) { s.remove(); s = null; return; }
-    s.classList.add('out');
-    setTimeout(function () { if (s) { s.remove(); s = null; } }, 1100);
-  }
-  if (img) { img.addEventListener('error', function () { kill(true); }); }
-  setTimeout(function () {
-    ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (t) {
-      window.addEventListener(t, function () { kill(true); }, { once: true, passive: true });
-    });
-  }, 400);
-  requestAnimationFrame(function () { requestAnimationFrame(function () { s.classList.add('in'); }); });
-  setTimeout(function () { kill(false); }, 3000);
-})();
-</script>
+<script src="assets/page.js"></script>
 <header class="mast">
   <div class="gfband flat" role="img" aria-label="GeodeForge — artisan webtool design">
     <img class="b-wm" src="assets/brand/band-wordmark.webp" alt="" width="588" height="96"/>
@@ -69,7 +47,7 @@
   <div class="chips">
     <span class="chip"><b>Free</b> — no server to pay for</span>
     <span class="chip"><b>No account</b>, no sign-up</span>
-    <span class="chip"><b>No limits</b>, no quotas</span>
+    <span class="chip"><b>No quotas</b>, no daily caps</span>
     <span class="chip"><b>No watermark</b> on your output</span>
   </div>
 </header>
@@ -189,7 +167,7 @@ do before it does anything. Beyond PDF entirely: the studio's
   <dt>Why is there no file-size limit or daily quota?</dt>
   <dd>Limits exist to manage server cost, and there is no server. The practical limit is your device’s own memory, which for ordinary documents you will not notice.</dd>
   <dt>Do the tools work offline?</dt>
-  <dd>Once a tool page has loaded, the work itself needs no connection — the processing is local. The page and its engine still have to load from this site first.</dd>
+  <dd>Not fully. A tool’s engine loads from this site the first time you run that tool, so you need a connection then. Your file never goes with it: the processing is local.</dd>
   <dt>What does GeodePDF do with my data?</dt>
   <dd>Nothing, because it never receives any. The page makes no third-party requests of any kind — no analytics, no ad network, no fonts from a CDN. The one sponsor link is a plain link.</dd>
 </dl>
@@ -236,7 +214,7 @@ do before it does anything. Beyond PDF entirely: the studio's
       <a href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F&title=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser." target="_blank" rel="noopener">QQ空间</a>
       <a href="https://www.douban.com/share/service?href=https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F&name=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser." target="_blank" rel="noopener">豆瓣</a>
       <a href="mailto:?subject=GeodePDF&body=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser.%20https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F" target="_blank" rel="noopener">Email</a>
-      <button type="button" onclick="navigator.clipboard&&navigator.clipboard.writeText('https://geodeforge.com/geodepdf/');this.textContent='Copied'">Copy link</button>
+      <button type="button" data-copy="https://geodeforge.com/geodepdf/">Copy link</button>
     </div>
   </section>
 

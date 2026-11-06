@@ -4,13 +4,13 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Flatten a PDF form — bake fields into the page | GeodePDF</title>
-<meta name="description" content="Bake filled form fields into PDF page content so they can’t be edited further, in your browser. XFA forms are refused with a reason. Nothing is uploaded."/>
+<meta name="description" content="Bake filled form fields into PDF page content so they can no longer be edited as fields, in your browser. XFA forms are refused with a reason. Nothing is uploaded."/>
 <link rel="canonical" href="https://geodeforge.com/geodepdf/flatten/"/>
 <link rel="icon" href="../assets/brand/favicon.svg" type="image/svg+xml"/>
 <link rel="alternate" hreflang="en" href="https://geodeforge.com/geodepdf/flatten/"/>
 <link rel="alternate" hreflang="x-default" href="https://geodeforge.com/geodepdf/flatten/"/>
 <link rel="stylesheet" href="../assets/app.css?v=1"/>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"GeodePDF — Flatten","url":"https://geodeforge.com/geodepdf/flatten/","description":"Bake filled form fields into PDF page content so they can’t be edited further, in your browser. XFA forms are refused with a reason. Nothing is uploaded.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any — runs entirely in the browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"GeodePDF — Flatten","url":"https://geodeforge.com/geodepdf/flatten/","description":"Bake filled form fields into PDF page content so they can no longer be edited as fields, in your browser. XFA forms are refused with a reason. Nothing is uploaded.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any — runs entirely in the browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"When should I flatten a form?","acceptedAnswer":{"@type":"Answer","text":"When the filling is done and the document moves on — to filing, signature, or someone who should read it but not edit it."}},{"@type":"Question","name":"Can flattening be undone?","acceptedAnswer":{"@type":"Answer","text":"No — that is its purpose. Keep your original filled form if you may need to edit again."}},{"@type":"Question","name":"Why was my form refused?","acceptedAnswer":{"@type":"Answer","text":"It is most likely an XFA form — an XML program inside a PDF shell. Its visible pages are often placeholders, so flattening them would silently destroy the real form. The tool explains this instead of guessing with your document."}},{"@type":"Question","name":"Is my form uploaded?","acceptedAnswer":{"@type":"Answer","text":"No. Flattening happens in your browser."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"HowTo","name":"Flatten a PDF form","step":[{"@type":"HowToStep","name":"Open the file","text":"Drop your PDF on the page — it is opened locally in your browser and never uploaded."},{"@type":"HowToStep","name":"Choose what to do","text":"The controls come from what your file actually is; options that cannot change the result are not shown."},{"@type":"HowToStep","name":"Run it and read the receipt","text":"The tool reports what it did, what it did not do, and any cost — then you save the result on your own device."}]}</script>
 </head>
@@ -46,7 +46,7 @@
 <main>
   <section class="hero">
     <h1>Flatten a PDF form</h1>
-    <p class="sub">Filled fields become ordinary page content — visible everywhere, editable nowhere. On your device.</p>
+    <p class="sub">Filled fields become ordinary page content — visible in every reader, and no longer editable as form fields. On your device.</p>
 
 
 
@@ -188,7 +188,7 @@ convincing-looking file with the real form gone.</p>
       <a href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F&title=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser." target="_blank" rel="noopener">QQ空间</a>
       <a href="https://www.douban.com/share/service?href=https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F&name=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser." target="_blank" rel="noopener">豆瓣</a>
       <a href="mailto:?subject=GeodePDF&body=Free%20PDF%20tools%20that%20never%20upload%20your%20file.%20No%20account%2C%20no%20watermark%2C%20nothing%20leaves%20your%20browser.%20https%3A%2F%2Fgeodeforge.com%2Fgeodepdf%2F" target="_blank" rel="noopener">Email</a>
-      <button type="button" onclick="navigator.clipboard&&navigator.clipboard.writeText('https://geodeforge.com/geodepdf/');this.textContent='Copied'">Copy link</button>
+      <button type="button" data-copy="https://geodeforge.com/geodepdf/">Copy link</button>
     </div>
   </section>
 
@@ -219,6 +219,7 @@ convincing-looking file with the real form gone.</p>
   <img class="b-st" src="../assets/brand/band-strapline.webp" alt="" width="649" height="56"/>
 </div>
 
+<script src="../assets/page.js" defer></script>
 <script type="module" src="../assets/app.js"></script>
 </body>
 </html>
